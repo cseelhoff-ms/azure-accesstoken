@@ -6,7 +6,7 @@ import jwt
 
 def get_access_token(device_code:str, secondsBetweenVerificationChecks:int, secondsUntilVerificationExpires:int):
     azure_powershell_clientId = "1950a258-227b-4e31-a9cf-717495945fc2"
-    token_uri = f"https://login.microsoftonline.com/organizations/oauth2/v2.0/token"
+    token_uri = "https://login.microsoftonline.com/organizations/oauth2/v2.0/token"
     grant_type = "urn:ietf:params:oauth:grant-type:device_code"    
     bodyToken : dict[str, str]= {
         "grant_type": grant_type,
@@ -30,7 +30,7 @@ def get_access_token(device_code:str, secondsBetweenVerificationChecks:int, seco
 
 def get_device_code():
     azure_powershell_clientId = "1950a258-227b-4e31-a9cf-717495945fc2"
-    device_code_uri = f"https://login.microsoftonline.com/organizations/oauth2/v2.0/devicecode"
+    device_code_uri = "https://login.microsoftonline.com/organizations/oauth2/v2.0/devicecode"
     bodyDeviceCode = {
         "scope": "user_impersonation",
         "client_id": azure_powershell_clientId,

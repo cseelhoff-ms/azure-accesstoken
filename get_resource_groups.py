@@ -3,6 +3,7 @@ import requests
 
 if __name__ == "__main__":        
     if 'AZURE_ACCESS_TOKEN' not in os.environ:
+        print("run: export AZURE_ACCESS_TOKEN=$(python get_token.py)")
         exit(0)
     accessToken = os.environ['AZURE_ACCESS_TOKEN']
     headers = {"Authorization": f"Bearer {accessToken}"}
