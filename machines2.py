@@ -12,8 +12,8 @@ def get_access_token(device_code:str, secondsBetweenVerificationChecks:int, seco
         "grant_type": grant_type,
         "client_id": azure_powershell_clientId,
         "device_code": device_code,
-        "audience": "https://api.securitycenter.microsoft.com",
-        "scope": "https://api.securitycenter.microsoft.com/.default"
+        "audience": "https://securitycenter.onmicrosoft.com/windowsatpservice",
+        "scope": "https://securitycenter.onmicrosoft.com/windowsatpservice/.default"
     }
     while secondsUntilVerificationExpires > 0:
         time.sleep(secondsBetweenVerificationChecks)
@@ -32,10 +32,9 @@ def get_device_code():
     azure_powershell_clientId = "1950a258-227b-4e31-a9cf-717495945fc2"
     device_code_uri = "https://login.microsoftonline.com/organizations/oauth2/v2.0/devicecode"
     bodyDeviceCode = {
-        "scope": "user_impersonation",
         "client_id": azure_powershell_clientId,
-        "audience": "https://api.securitycenter.microsoft.com",
-        "scope": "https://api.securitycenter.microsoft.com/.default"
+        "audience": "https://securitycenter.onmicrosoft.com/windowsatpservice.net/",
+        "scope": "https://securitycenter.onmicrosoft.com/windowsatpservice/.default"
     }
     deviceCodeResponse = requests.get(device_code_uri, data=bodyDeviceCode).json()
     logging.info(deviceCodeResponse['message'])
@@ -54,7 +53,7 @@ if __name__ == "__main__":
         # decode the jwt accessToken to ensure it is not expired
         decoded_token = jwt.decode(access_token, options={"verify_signature": False})
         # Check if the token will expire in the next 10 minutes
-        if time.time() < decoded_token['exp'] - 100*60:
+        if time.time() < decoded_token['exp'] - 10*60:
             print(access_token)
             exit(0)
     device_code, secondsBetweenVerificationChecks, secondsUntilVerificationExpires = get_device_code()

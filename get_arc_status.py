@@ -1,7 +1,7 @@
 import os
 import requests
 
-def create_live_response_session(machine_id, access_token):
+def create_live_response_session(machine_id:str, access_token:str):
     # Define the API endpoint
     url = f"https://api.securitycenter.windows.com/api/machineactions"
 
@@ -31,10 +31,9 @@ def create_live_response_session(machine_id, access_token):
 
 
 # Create a new live response session
-session_id = create_live_response_session(machine_id, access_token)
 if __name__ == "__main__":        
     if 'AZURE_ACCESS_TOKEN' not in os.environ:
-        print("run: export AZURE_ACCESS_TOKEN=$(python get_token.py)")
+        print("run: export AZURE_ACCESS_TOKEN=$(python get_mde_token.py)")
         exit(0)
     access_token = os.environ['AZURE_ACCESS_TOKEN']
 
@@ -50,8 +49,6 @@ if __name__ == "__main__":
         "Authorization": f"Bearer {access_token}",
         "Content-Type": "application/json"
     }
-
-
 
     # Define the payload
     payload = {
@@ -72,6 +69,8 @@ if __name__ == "__main__":
     access_token = os.getenv("AZURE_ACCESS_TOKEN")
     machine_id = "<your-machine-id>"
     session_id = "<your-session-id>"
+
+    session_id = create_live_response_session(machine_id, access_token)
 
     # Get the Azure Arc resource connection status
     resourceGroupName = "default-rg"
